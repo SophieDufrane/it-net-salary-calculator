@@ -37,7 +37,7 @@ const DEDUCTION_BONUS_MAX = 35000;
 const NB_FIX_MONTHS = 13;
 
 // Calculations with a temporary const for RAL for testing
-const ral = 28000;
+const ral = 65000;
 
 function calculateINPS(ral) {
   return RATE_FIX_INPS * ral;
@@ -74,6 +74,7 @@ function applyBrackets(taxableIncome, brackets) {
 }
 console.log(applyBrackets(taxableIncome, RATE_REGIONALE.Lombardia));
 
+// Calculate Comunale tax based on Milano parameters
 function calculateComunaleTax(taxableIncome) {
   if (taxableIncome >= RATE_FIX_ADD_COMUNALE.Milano.exemption) {
     return taxableIncome * RATE_FIX_ADD_COMUNALE.Milano.rate;
@@ -81,31 +82,35 @@ function calculateComunaleTax(taxableIncome) {
 }
 console.log(calculateComunaleTax(taxableIncome));
 
-let deduction = 0;
-if (taxableIncome <= INCOME_THRESHOLD_MIN) {
-  deduction = DEDUCTION_FIXED_LOW;
+// Calculate the deduction + bonus based on brackets
+function calculateDeduction(taxableIncome) {
+  let deduction = 0;
+  if (taxableIncome <= INCOME_THRESHOLD_MIN) {
+    deduction = DEDUCTION_FIXED_LOW;
+  }
+  if (
+    taxableIncome > INCOME_THRESHOLD_MIN &&
+    taxableIncome < INCOME_THRESHOLD_LOW
+  ) {
+    deduction =
+      DEDUCTION_BASE +
+      DEDUCTION_VARIABLE_MID *
+        ((INCOME_THRESHOLD_LOW - taxableIncome) / DEDUCTION_RANGE_MID);
+  }
+  if (
+    taxableIncome > INCOME_THRESHOLD_LOW &&
+    taxableIncome < INCOME_THRESHOLD_MID
+  ) {
+    deduction =
+      DEDUCTION_BASE *
+      ((INCOME_THRESHOLD_MID - taxableIncome) / DEDUCTION_RANGE_HIGH);
+  }
+  if (
+    taxableIncome >= DEDUCTION_BONUS_MIN &&
+    taxableIncome <= DEDUCTION_BONUS_MAX
+  ) {
+    deduction += DEDUCTION_BONUS;
+  }
+  return deduction;
 }
-if (
-  taxableIncome > INCOME_THRESHOLD_MIN &&
-  taxableIncome < INCOME_THRESHOLD_LOW
-) {
-  deduction =
-    DEDUCTION_BASE +
-    DEDUCTION_VARIABLE_MID *
-      ((INCOME_THRESHOLD_LOW - taxableIncome) / DEDUCTION_RANGE_MID);
-}
-if (
-  taxableIncome > INCOME_THRESHOLD_LOW &&
-  taxableIncome < INCOME_THRESHOLD_MID
-) {
-  deduction =
-    DEDUCTION_BASE *
-    ((INCOME_THRESHOLD_MID - taxableIncome) / DEDUCTION_RANGE_HIGH);
-}
-if (
-  taxableIncome >= DEDUCTION_BONUS_MIN &&
-  taxableIncome <= DEDUCTION_BONUS_MAX
-) {
-  deduction += DEDUCTION_BONUS;
-}
-console.log(deduction);
+console.log(calculateDeduction(taxableIncome));
