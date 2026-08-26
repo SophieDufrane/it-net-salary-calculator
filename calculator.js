@@ -37,7 +37,7 @@ const DEDUCTION_BONUS_MAX = 35000;
 const NB_FIX_MONTHS = 13;
 
 // Calculations with a temporary const for RAL for testing
-const ral = 25000;
+const ral = 28000;
 
 function calculateINPS(ral) {
   return RATE_FIX_INPS * ral;
@@ -48,7 +48,6 @@ function calculateTaxableIncome(ral, inps) {
   return ral - inps;
 }
 const taxableIncome = calculateTaxableIncome(ral, inps);
-
 console.log(taxableIncome);
 
 // Reusable function for the IRPEF and the Regionale calculation with total and details
@@ -82,4 +81,31 @@ function calculateComunaleTax(taxableIncome) {
 }
 console.log(calculateComunaleTax(taxableIncome));
 
-// const RATE_FIX_ADD_COMUNALE = { Milano: { rate: 0.008, exemption: 23000 } };
+let deduction = 0;
+if (taxableIncome <= INCOME_THRESHOLD_MIN) {
+  deduction = DEDUCTION_FIXED_LOW;
+}
+if (
+  taxableIncome > INCOME_THRESHOLD_MIN &&
+  taxableIncome < INCOME_THRESHOLD_LOW
+) {
+  deduction =
+    DEDUCTION_BASE +
+    DEDUCTION_VARIABLE_MID *
+      ((INCOME_THRESHOLD_LOW - taxableIncome) / DEDUCTION_RANGE_MID);
+}
+if (
+  taxableIncome > INCOME_THRESHOLD_LOW &&
+  taxableIncome < INCOME_THRESHOLD_MID
+) {
+  deduction =
+    DEDUCTION_BASE *
+    ((INCOME_THRESHOLD_MID - taxableIncome) / DEDUCTION_RANGE_HIGH);
+}
+if (
+  taxableIncome >= DEDUCTION_BONUS_MIN &&
+  taxableIncome <= DEDUCTION_BONUS_MAX
+) {
+  deduction += DEDUCTION_BONUS;
+}
+console.log(deduction);
