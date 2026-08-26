@@ -35,3 +35,19 @@ const DEDUCTION_BONUS_MAX = 35000;
 
 // Number of months for the monthly net
 const NB_FIX_MONTHS = 13;
+
+// Calculations with a temporary const for RAL for testing
+const ral = 35000;
+
+function calculateINPS(ral) {
+  return RATE_FIX_INPS * ral;
+}
+const inps = calculateINPS(ral);
+
+function calculateTaxableIncome(ral, inps) {
+  return ral - inps;
+}
+const taxableIncome = calculateTaxableIncome(ral, inps);
+
+console.log(inps);
+console.log(taxableIncome);
