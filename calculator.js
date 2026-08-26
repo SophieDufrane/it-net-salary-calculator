@@ -37,7 +37,7 @@ const DEDUCTION_BONUS_MAX = 35000;
 const NB_FIX_MONTHS = 13;
 
 // Calculations with a temporary const for RAL for testing
-const ral = 28000;
+const ral = 65000;
 
 function calculateINPS(ral) {
   return RATE_FIX_INPS * ral;
@@ -49,29 +49,28 @@ function calculateTaxableIncome(ral, inps) {
 }
 const taxableIncome = calculateTaxableIncome(ral, inps);
 
-console.log(inps); // -> 5973.5
-console.log(taxableIncome); // -> 59026.5
+console.log(taxableIncome);
 
-// Reusable function for the IRPEF and the Regionale calculation
-let tranche1 = 0;
-let tranche2 = 0;
-let tranche3 = 0;
+// Reusable function for the IRPEF and the Regionale calculation with total and details
+function applyBrackets(taxableIncome, brackets) {
+  let totalTax = 0;
+  let previousLimit = 0;
+  let bracketDetails = [];
 
-tranche1 = Math.min(taxableIncome, RATE_IRPEF[0].valMax) * RATE_IRPEF[0].rate;
-
-if (taxableIncome > RATE_IRPEF[0].valMax) {
-  tranche2 =
-    (Math.min(taxableIncome, RATE_IRPEF[1].valMax) - RATE_IRPEF[0].valMax) *
-    RATE_IRPEF[1].rate;
+  for (let i = 0; i < brackets.length; i++) {
+    const taxableAmount = Math.max(
+      0,
+      Math.min(taxableIncome, brackets[i].valMax) - previousLimit,
+    );
+    previousLimit = brackets[i].valMax;
+    const tax = taxableAmount * brackets[i].rate;
+    totalTax += tax;
+    bracketDetails.push({
+      rate: brackets[i].rate,
+      taxableAmount: taxableAmount,
+      tax: tax,
+    });
+  }
+  return { total: totalTax, details: bracketDetails };
 }
-
-tranche3 =
-  (Math.max(taxableIncome, RATE_IRPEF[1].valMax) - RATE_IRPEF[1].valMax) *
-  RATE_IRPEF[2].rate;
-
-let total = tranche1 + tranche2 + tranche3;
-
-console.log(tranche1);
-console.log(tranche2);
-console.log(tranche3);
-console.log(total);
+console.log(applyBrackets(taxableIncome, RATE_REGIONALE.Lombardia));
