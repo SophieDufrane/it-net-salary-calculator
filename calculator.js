@@ -36,19 +36,13 @@ const DEDUCTION_BONUS_MAX = 35000;
 // Number of months for the monthly net
 const NB_FIX_MONTHS = 13;
 
-// Calculations with a temporary const for RAL for testing
-const ral = 65000;
-
 function calculateINPS(ral) {
   return RATE_FIX_INPS * ral;
 }
-const inps = calculateINPS(ral);
 
 function calculateTaxableIncome(ral, inps) {
   return ral - inps;
 }
-const taxableIncome = calculateTaxableIncome(ral, inps);
-console.log(taxableIncome);
 
 // Reusable function for the IRPEF and the Regionale calculation with total and details
 function applyBrackets(taxableIncome, brackets) {
@@ -72,7 +66,6 @@ function applyBrackets(taxableIncome, brackets) {
   }
   return { total: totalTax, details: bracketDetails };
 }
-console.log(applyBrackets(taxableIncome, RATE_REGIONALE.Lombardia));
 
 // Calculate Comunale tax based on Milano parameters
 function calculateComunaleTax(taxableIncome) {
@@ -80,7 +73,6 @@ function calculateComunaleTax(taxableIncome) {
     return taxableIncome * RATE_FIX_ADD_COMUNALE.Milano.rate;
   } else return 0;
 }
-console.log(calculateComunaleTax(taxableIncome));
 
 // Calculate the deduction + bonus based on brackets
 function calculateDeduction(taxableIncome) {
@@ -113,4 +105,34 @@ function calculateDeduction(taxableIncome) {
   }
   return deduction;
 }
-console.log(calculateDeduction(taxableIncome));
+
+// refactor and combine all calculation steps into the final net salary result
+function calculateNetSalary(ral) {
+  const inps = calculateINPS(ral);
+  const taxableIncome = calculateTaxableIncome(ral, inps);
+  const irpefResult = applyBrackets(taxableIncome, RATE_IRPEF);
+  const deduction = calculateDeduction(taxableIncome);
+  const irpefNet = irpefResult.total - deduction;
+  const regionaleResult = applyBrackets(
+    taxableIncome,
+    RATE_REGIONALE.Lombardia,
+  );
+  const comunaleTax = calculateComunaleTax(taxableIncome);
+  const totalTaxes = inps + irpefNet + regionaleResult.total + comunaleTax;
+  const netAnnual = ral - totalTaxes;
+  const netMonthly = netAnnual / NB_FIX_MONTHS;
+
+  return {
+    INPS: inps,
+    "Base Imponibile fiscale": taxableIncome,
+    "IRPEF Totale": irpefResult,
+    Detrazione: deduction,
+    "IRPEF netta": irpefNet,
+    Regionale: regionaleResult,
+    Comunale: comunaleTax,
+    "Prelievi Totale": totalTaxes,
+    "Netto annuale": netAnnual,
+    "Netto Mensile": netMonthly,
+  };
+}
+console.log(calculateNetSalary(45000));
