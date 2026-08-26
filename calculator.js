@@ -37,7 +37,7 @@ const DEDUCTION_BONUS_MAX = 35000;
 const NB_FIX_MONTHS = 13;
 
 // Calculations with a temporary const for RAL for testing
-const ral = 35000;
+const ral = 28000;
 
 function calculateINPS(ral) {
   return RATE_FIX_INPS * ral;
@@ -49,5 +49,29 @@ function calculateTaxableIncome(ral, inps) {
 }
 const taxableIncome = calculateTaxableIncome(ral, inps);
 
-console.log(inps);
-console.log(taxableIncome);
+console.log(inps); // -> 5973.5
+console.log(taxableIncome); // -> 59026.5
+
+// Reusable function for the IRPEF and the Regionale calculation
+let tranche1 = 0;
+let tranche2 = 0;
+let tranche3 = 0;
+
+tranche1 = Math.min(taxableIncome, RATE_IRPEF[0].valMax) * RATE_IRPEF[0].rate;
+
+if (taxableIncome > RATE_IRPEF[0].valMax) {
+  tranche2 =
+    (Math.min(taxableIncome, RATE_IRPEF[1].valMax) - RATE_IRPEF[0].valMax) *
+    RATE_IRPEF[1].rate;
+}
+
+tranche3 =
+  (Math.max(taxableIncome, RATE_IRPEF[1].valMax) - RATE_IRPEF[1].valMax) *
+  RATE_IRPEF[2].rate;
+
+let total = tranche1 + tranche2 + tranche3;
+
+console.log(tranche1);
+console.log(tranche2);
+console.log(tranche3);
+console.log(total);
