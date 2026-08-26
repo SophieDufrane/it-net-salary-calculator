@@ -11,14 +11,14 @@ Full assumptions and calculation details will be documented as the project progr
 
 ## Progress Log
 
-### Day 1 — Research & calculation design
+### Research & calculation design
 
 - Researched the Italian gross-to-net salary system: IRPEF (2025 brackets), INPS employee contribution, employee tax credit ("detrazione lavoro dipendente"), regional surtax (Lombardia) and municipal surtax (Milano)
 - Validated the full calculation manually in a spreadsheet, using a test case (RAL = €35,000), to confirm formulas and expected results before writing any code
 - Decided on tech stack: HTML, Bootstrap (CDN), vanilla JavaScript to keep the calculation logic transparent and the deployment simple (GitHub Pages)
 - Decided to test the calculation logic with plain Javascript
 
-### Day 2 — Structure & design
+### Structure & design
 
 - Set up project structure (flat file layout, no subfolders)
 - Created wireframes (mobile + larger screen) in a mobile-first approach, since this type of tool is likely to be checked quickly on a phone
@@ -30,6 +30,15 @@ Full assumptions and calculation details will be documented as the project progr
         <img src="images/Wireframes-it-net-salary-calculator.webp" alt="Wireframes" />
      </p>
   </details>
+
+### Development and calculation logic
+
+- Chose 2025 IRPEF brackets (23%/35%/43%) as the reference year, for a stable dataset
+- Excluded "trattamento integrativo" and "ulteriore detrazione" (2025 low/mid-income bonuses) to simplify the prototype
+- Fixed at 13 monthly payments (standard Italian practice: tredicesima); a note could explain the tredicesima mechanism next to the monthly net amount
+- Regional/municipal data structures (`RATE_REGIONALE`, `RATE_FIX_ADD_COMUNALE`) are keyed by name (e.g. "Lombardia", "Milano") to allow future extension to other regions/comuni, even though only one of each is implemented in this prototype
+- `applyBrackets` is a single generic function used for both IRPEF and addizionale regional as both are progressive calculations based on brackets
+- `calculateComunaleTax` currently hardcodes "Milano" (would need to accept a comune parameter to support other municipalities)
 
 ## Tech Stack
 

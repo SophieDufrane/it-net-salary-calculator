@@ -37,7 +37,7 @@ const DEDUCTION_BONUS_MAX = 35000;
 const NB_FIX_MONTHS = 13;
 
 // Calculations with a temporary const for RAL for testing
-const ral = 65000;
+const ral = 25000;
 
 function calculateINPS(ral) {
   return RATE_FIX_INPS * ral;
@@ -74,3 +74,12 @@ function applyBrackets(taxableIncome, brackets) {
   return { total: totalTax, details: bracketDetails };
 }
 console.log(applyBrackets(taxableIncome, RATE_REGIONALE.Lombardia));
+
+function calculateComunaleTax(taxableIncome) {
+  if (taxableIncome >= RATE_FIX_ADD_COMUNALE.Milano.exemption) {
+    return taxableIncome * RATE_FIX_ADD_COMUNALE.Milano.rate;
+  } else return 0;
+}
+console.log(calculateComunaleTax(taxableIncome));
+
+// const RATE_FIX_ADD_COMUNALE = { Milano: { rate: 0.008, exemption: 23000 } };
