@@ -106,7 +106,7 @@ function calculateDeduction(taxableIncome) {
   return deduction;
 }
 
-// refactor and combine all calculation steps into the final net salary result
+// Refactor and combine all calculation steps into the final net salary result
 function calculateNetSalary(ral) {
   const inps = calculateINPS(ral);
   const taxableIncome = calculateTaxableIncome(ral, inps);
@@ -135,4 +135,3 @@ function calculateNetSalary(ral) {
     "Netto Mensile": netMonthly,
   };
 }
-console.log(calculateNetSalary(45000));
