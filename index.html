@@ -3,9 +3,203 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Styles  -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <!-- Font Awesome CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <title>IT Net Salary Calculator</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <header>
+      <h1>Simulatore Fiscale</h1>
+    </header>
+
+    <main class="flex-grow-1">
+      <section class="container">
+        <div class="row">
+          <div class="col-12 col-lg-6">
+            <div id="data-entry">
+              <form>
+                <div class="mb-3">
+                  <label for="income-input" class="form-label"
+                    >Il tuo reddito</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Inserisci la RAL annuale"
+                    id="income-input"
+                    aria-label="Inserisci la RAL annuale"
+                  />
+                  <div class="row">
+                    <div class="col-6">
+                      <label for="region-input" class="form-label"
+                        >Regione</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="region-input"
+                        ...
+                      />
+                    </div>
+                    <div class="col-6">
+                      <label for="city-input" class="form-label">Comune</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="city-input"
+                        ...
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <button type="submit" class="btn btn-primary">Calcola</button>
+                  <button type="reset" class="btn btn-primary">Cancella</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div id="data-results">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Voce</th>
+                    <th scope="col">Aliquota</th>
+                    <th scope="col">Importo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Reddito lordo (RAL)</th>
+                    <td></td>
+                    <td>0&nbsp;&euro;</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">INPS</th>
+                    <td>9.19%</td>
+                    <td>calculation</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Base Imponibile fiscale</th>
+                    <td></td>
+                    <td>calculation</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">IRPEF (&lt;&nbsp;28.000&nbsp;&euro;)</th>
+                    <td>23.00%</td>
+                    <td>calculation</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      IRPEF (28.000&nbsp;&ndash;&nbsp;50.000&nbsp;&euro;)
+                    </th>
+                    <td>35.00%</td>
+                    <td>calculation</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">IRPEF (&gt;&nbsp;50.000&nbsp;&euro;)</th>
+                    <td>43.00%</td>
+                    <td>calculation</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">IRPEF lorda totale</th>
+                    <td></td>
+                    <td>calculation</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Detrazione per lavoro dipendente</th>
+                    <td></td>
+                    <td>calculation</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">IRPEF netta</th>
+                    <td></td>
+                    <td>calculation</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Addizionale regionale (&lt;&nbsp;15.000&nbsp;&euro;)
+                    </th>
+                    <td>1.23%</td>
+                    <td>calculation</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Addizionale regionale
+                      (15.000&nbsp;&ndash;&nbsp;28.000&nbsp;&euro;)
+                    </th>
+                    <td>1.58%</td>
+                    <td>calculation</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Addizionale regionale
+                      (28.000&nbsp;&ndash;&nbsp;50.000&nbsp;&euro;)
+                    </th>
+                    <td>1.72%</td>
+                    <td>calculation</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Addizionale regionale (&gt;&nbsp;50.000&nbsp;&euro;)
+                    </th>
+                    <td>1.73%</td>
+                    <td>calculation</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Addizionale regionale totale</th>
+                    <td></td>
+                    <td>calculation</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Addizionale comunale</th>
+                    <td>0.08%</td>
+                    <td>calculation</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Totale prelievi</th>
+                    <td></td>
+                    <td>calculation</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Netto annuale</th>
+                    <td></td>
+                    <td>calculation</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Netto mensile</th>
+                    <td></td>
+                    <td>calculation</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Empowered by Sophie Eyraud</p>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
     <script src="calculator.js"></script>
     <script>
       console.log(calculateNetSalary(45000));
