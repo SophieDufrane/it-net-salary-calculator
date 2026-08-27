@@ -1,3 +1,4 @@
+// DOM references: form input and all result table cells/spans
 const formEntries = document.getElementById("form-entries");
 const incomeInput = document.getElementById("income-input");
 const resultRal = document.getElementById("result-ral");
@@ -16,12 +17,16 @@ const irpefTaxElements = document.querySelectorAll(".irpef-tax");
 const regionaleRateElements = document.querySelectorAll(".regionale-rate");
 const regionaleTaxElements = document.querySelectorAll(".regionale-tax");
 
+// Calculate and display results on form submission
 formEntries.addEventListener("submit", (event) => {
   event.preventDefault();
   const ral = Number(incomeInput.value);
   const results = calculateNetSalary(ral);
-  console.log(results);
+  displayResults(ral, results);
+});
 
+// Populate the results table with calculated values, including bracket details
+function displayResults(ral, results) {
   resultRal.textContent = ral.toLocaleString("it-IT");
   inps.textContent = results.inps.toLocaleString("it-IT");
   baseImponibile.textContent = results.baseImponibile.toLocaleString("it-IT");
@@ -52,4 +57,27 @@ formEntries.addEventListener("submit", (event) => {
     );
     regionaleTaxElements[index].textContent = row.tax.toLocaleString("it-IT");
   });
+}
+
+// Reset result amounts to zero while keeping displayed tax rates
+function clearResults() {
+  resultRal.textContent = "0";
+  inps.textContent = "0";
+  baseImponibile.textContent = "0";
+  detrazione.textContent = "0";
+  irpefNetta.textContent = "0";
+  comunale.textContent = "0";
+  prelievoTotale.textContent = "0";
+  nettoAnnuale.textContent = "0";
+  nettoMensile.textContent = "0";
+  irpefTotale.textContent = "0";
+  regionale.textContent = "0";
+
+  irpefTaxElements.forEach((el) => (el.textContent = "0"));
+  regionaleTaxElements.forEach((el) => (el.textContent = "0"));
+}
+
+// Clear results table when the form is reset (Cancella button)
+formEntries.addEventListener("reset", () => {
+  clearResults();
 });
