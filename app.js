@@ -30,7 +30,7 @@ function displayResults(ral, results) {
   resultRal.textContent = ral.toLocaleString("it-IT");
   inps.textContent = results.inps.toLocaleString("it-IT");
   baseImponibile.textContent = results.baseImponibile.toLocaleString("it-IT");
-  detrazione.textContent = results.detrazione.toLocaleString("it-IT");
+  detrazione.textContent = `(${results.detrazione.toLocaleString("it-IT")})`;
   irpefNetta.textContent = results.irpefNetta.toLocaleString("it-IT");
   comunale.textContent = results.comunale.toLocaleString("it-IT");
   prelievoTotale.textContent = results.prelievoTotale.toLocaleString("it-IT");

@@ -82,7 +82,7 @@ function calculateDeduction(taxableIncome) {
   }
   if (
     taxableIncome > INCOME_THRESHOLD_MIN &&
-    taxableIncome < INCOME_THRESHOLD_LOW
+    taxableIncome <= INCOME_THRESHOLD_LOW
   ) {
     deduction =
       DEDUCTION_BASE +
@@ -91,7 +91,7 @@ function calculateDeduction(taxableIncome) {
   }
   if (
     taxableIncome > INCOME_THRESHOLD_LOW &&
-    taxableIncome < INCOME_THRESHOLD_MID
+    taxableIncome <= INCOME_THRESHOLD_MID
   ) {
     deduction =
       DEDUCTION_BASE *
@@ -135,3 +135,5 @@ function calculateNetSalary(ral) {
     nettoMensile: netMonthly,
   };
 }
+
+module.exports = { calculateNetSalary };
