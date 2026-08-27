@@ -40,6 +40,10 @@ Full assumptions and calculation details will be documented as the project progr
 - `applyBrackets` is a single generic function used for both IRPEF and addizionale regional as both are progressive calculations based on brackets
 - `calculateComunaleTax` currently hardcodes "Milano" (would need to accept a comune parameter to support other municipalities)
 
+### Areas for Improvement
+
+- Generate results table rows dynamically from `calculateNetSalary()` output length (currently hardcoded per bracket), so adding/removing tax brackets wouldn't require manual HTML changes
+
 ## Tech Stack
 
 - **Frontend:** HTML, CSS (Bootstrap), vanilla JavaScript

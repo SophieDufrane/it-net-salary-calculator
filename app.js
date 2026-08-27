@@ -11,8 +11,10 @@ const nettoAnnuale = document.getElementById("result-nettoAnnuale");
 const nettoMensile = document.getElementById("result-nettoMensile");
 const irpefTotale = document.getElementById("result-irpefTotale");
 const regionale = document.getElementById("result-regionale");
-const irpefTranche1 = document.getElementById("result-irpefTranche1");
-const irpefRateTranche1 = document.getElementById("result-irpefRateTranche1");
+const irpefRateElements = document.querySelectorAll(".irpef-rate");
+const irpefTaxElements = document.querySelectorAll(".irpef-tax");
+const regionaleRateElements = document.querySelectorAll(".regionale-rate");
+const regionaleTaxElements = document.querySelectorAll(".regionale-tax");
 
 formEntries.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -31,12 +33,23 @@ formEntries.addEventListener("submit", (event) => {
   nettoMensile.textContent = results.nettoMensile.toLocaleString("it-IT");
   irpefTotale.textContent = results.irpefTotale.total.toLocaleString("it-IT");
   regionale.textContent = results.regionale.total.toLocaleString("it-IT");
-  irpefTranche1.textContent =
-    results.irpefTotale.details[0].tax.toLocaleString("it-IT");
-  RateTranche1.textContent = results.irpefTotale.details[0].rate.toLocaleString(
-    "it-IT",
-    {
+
+  results.irpefTotale.details.forEach((row, index) => {
+    irpefRateElements[index].textContent = row.rate.toLocaleString("it-IT", {
       style: "percent",
-    },
-  );
+    });
+    irpefTaxElements[index].textContent = row.tax.toLocaleString("it-IT");
+  });
+
+  results.regionale.details.forEach((row, index) => {
+    regionaleRateElements[index].textContent = row.rate.toLocaleString(
+      "it-IT",
+      {
+        style: "percent",
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      },
+    );
+    regionaleTaxElements[index].textContent = row.tax.toLocaleString("it-IT");
+  });
 });
