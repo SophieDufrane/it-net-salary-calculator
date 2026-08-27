@@ -40,6 +40,19 @@ Full assumptions and calculation details will be documented as the project progr
 - `applyBrackets` is a single generic function used for both IRPEF and addizionale regional as both are progressive calculations based on brackets
 - `calculateComunaleTax` currently hardcodes "Milano" (would need to accept a comune parameter to support other municipalities)
 
+## Testing
+
+Basic automated tests were added in `tests/calculator.test.js`, validating `calculateNetSalary()` against three reference RAL.
+
+While testing the RAL=27,635€ case, a discrepancy was found between the JS calculation and the original Excel reference. After manual recalculation, the Excel reference itself contained an error and the JavaScript implementation was correct.
+
+  <details>
+     <summary>Testing Validation</summary>
+     <p>
+        <img src="images/testing.webp" alt="Testing" />
+     </p>
+  </details>
+
 ### Areas for Improvement
 
 - Generate results table rows dynamically from `calculateNetSalary()` output length (currently hardcoded per bracket), so adding/removing tax brackets wouldn't require manual HTML changes
