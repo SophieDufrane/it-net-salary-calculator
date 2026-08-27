@@ -123,15 +123,15 @@ function calculateNetSalary(ral) {
   const netMonthly = netAnnual / NB_FIX_MONTHS;
 
   return {
-    INPS: inps,
-    "Base Imponibile fiscale": taxableIncome,
-    "IRPEF Totale": irpefResult,
-    Detrazione: deduction,
-    "IRPEF netta": irpefNet,
-    Regionale: regionaleResult,
-    Comunale: comunaleTax,
-    "Prelievi Totale": totalTaxes,
-    "Netto annuale": netAnnual,
-    "Netto Mensile": netMonthly,
+    inps: inps,
+    baseImponibile: taxableIncome,
+    irpefTotale: irpefResult,
+    detrazione: deduction,
+    irpefNetta: irpefNet,
+    regionale: regionaleResult,
+    comunale: comunaleTax,
+    prelievoTotale: totalTaxes,
+    nettoAnnuale: netAnnual,
+    nettoMensile: netMonthly,
   };
 }
