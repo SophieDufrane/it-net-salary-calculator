@@ -43,6 +43,7 @@ Full assumptions and calculation details will be documented as the project progr
 ### Areas for Improvement
 
 - Generate results table rows dynamically from `calculateNetSalary()` output length (currently hardcoded per bracket), so adding/removing tax brackets wouldn't require manual HTML changes
+- Dynamically compute the displayed tax year instead of hardcoding "2025" (needs to confirm the exact Italian fiscal year reference rule before implementing)
 
 ## Tech Stack
 
