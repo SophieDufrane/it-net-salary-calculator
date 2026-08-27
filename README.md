@@ -4,10 +4,14 @@ A simple web-based calculator that estimates the annual and monthly **net salary
 
 Built as a technical prototype for a Jet HR product builder assessment.
 
+[Link to live version](https://sophiedufrane.github.io/it-net-salary-calculator/)
+
 ## Scope
 
-Simplified, standard case: full-time permanent employee, resident in Milano (Lombardia), no special tax benefits or Bonus.  
-Full assumptions and calculation details will be documented as the project progresses.
+- Simplified case: full-time permanent employee, resident in Milano (Lombardia), no special tax benefits or Bonus
+- Included in the calculation: INPS employee contribution, IRPEF 2025, tax credit, addizionale regionale and addizionale comunale
+- Salary is calculated over 13 monthly payments
+- Explicitly excluded: "trattamento integrativo", "ulteriore detrazione" 2025, personal deductions and support for regions/comuni other than Lombardia/Milano.
 
 ## Progress Log
 
@@ -22,7 +26,8 @@ Full assumptions and calculation details will be documented as the project progr
 
 - Set up project structure (flat file layout, no subfolders)
 - Created wireframes (mobile + larger screen) in a mobile-first approach, since this type of tool is likely to be checked quickly on a phone
-- UI includes Region/Comune dropdowns, structured for future extensibility — but only Lombardia/Milano are implemented and calculable in this prototype. This keeps the calculation logic simple while showing how the data model could scale to other regions.
+- UI includes Region/Comune fields, structured for future extensibility (but only Lombardia/Milano are implemented and calculable in this prototype). These fields are currently disabled rather than dropdowns, since only one option exists; this keeps the prototypt simple while showing how it could scale to other regions
+
   <details>
      <summary>Wireframes</summary>
 
@@ -34,8 +39,6 @@ Full assumptions and calculation details will be documented as the project progr
 ### Development and calculation logic
 
 - Chose 2025 IRPEF brackets (23%/35%/43%) as the reference year, for a stable dataset
-- Excluded "trattamento integrativo" and "ulteriore detrazione" (2025 low/mid-income bonuses) to simplify the prototype
-- Fixed at 13 monthly payments (standard Italian practice: tredicesima); a note could explain the tredicesima mechanism next to the monthly net amount
 - Regional/municipal data structures (`RATE_REGIONALE`, `RATE_FIX_ADD_COMUNALE`) are keyed by name (e.g. "Lombardia", "Milano") to allow future extension to other regions/comuni, even though only one of each is implemented in this prototype
 - `applyBrackets` is a single generic function used for both IRPEF and addizionale regional as both are progressive calculations based on brackets
 - `calculateComunaleTax` currently hardcodes "Milano" (would need to accept a comune parameter to support other municipalities)
@@ -53,7 +56,7 @@ While testing the RAL=27,635€ case, a discrepancy was found between the JS cal
      </p>
   </details>
 
-### Areas for Improvement
+## Areas for Improvement
 
 - Generate results table rows dynamically from `calculateNetSalary()` output length (currently hardcoded per bracket), so adding/removing tax brackets wouldn't require manual HTML changes
 - Dynamically compute the displayed tax year instead of hardcoding "2025" (needs to confirm the exact Italian fiscal year reference rule before implementing)
@@ -61,9 +64,21 @@ While testing the RAL=27,635€ case, a discrepancy was found between the JS cal
 ## Tech Stack
 
 - **Frontend:** HTML, CSS (Bootstrap), vanilla JavaScript
-- **Testing:**
+- **Testing:** Plain Node.js scripts (no framework)
 - **Deployment:** GitHub Pages
 
 ## Setup
 
-_TODO once the app is functional_
+No build step or dependencies required — this is a static HTML/CSS/JS project.
+
+To run locally:
+
+1. Clone the repository
+2. Open `index.html` directly in a browser
+
+To run the tests: `node tests/calculator.test.js`
+
+## Lessons Learned
+
+- Translating the spreadsheet logic into JavaScript wasn't a direct transcription. Calculations for IRPEF and addizionale regionale with brackets, required understanding _why_ each tranche depends on the cumulative amount from the previous one (hence the use of `previousLimit`), not just replicating a fixed formula
+- Using `forEach` on two separate arrays at once required understanding that the loop's `index` connects them: it points to the same position in both arrays at the same time, so each calculated value ends up matched with the correct HTML element
