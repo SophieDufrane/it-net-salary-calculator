@@ -19,188 +19,211 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header>
-      <h1>Simulatore Fiscale</h1>
+    <header class="pt-3 pb-3">
+      <h1 class="mb-0">Simulatore <span id="title-color">Fiscale</span></h1>
     </header>
 
-    <main class="flex-grow-1">
+    <main class="flex-grow-1 pt-5 pb-3">
       <section class="container">
         <div class="row">
+          <div class="col-12">
+            <div class="year-section mb-4 ps-4 pt-2 pb-2">
+              <p class="mb-0">Anno fiscale</p>
+              <h2 class="mb-0">2025</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="row gx-4">
           <div class="col-12 col-lg-6">
-            <div id="data-entry">
-              <form id="form-entries">
-                <div class="mb-3">
-                  <label for="income-input" class="form-label"
-                    >Il tuo reddito</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Inserisci la RAL annuale"
-                    id="income-input"
-                    aria-label="Inserisci la RAL annuale"
-                  />
-                  <div class="row">
-                    <div class="col-6">
+            <div class="form-section ps-4 pe-3 pt-3 pb-3 mb-4 mb-lg-0">
+              <div id="data-entry">
+                <form id="form-entries">
+                  <div class="mb-3">
+                    <label for="income-input" class="form-label"
+                      >Il tuo reddito</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control mb-3"
+                      placeholder="Inserisci la RAL annuale"
+                      id="income-input"
+                      aria-label="Inserisci la RAL annuale"
+                    />
+
+                    <div class="col-12">
                       <label for="region-input" class="form-label"
                         >Regione</label
                       >
                       <input
                         type="text"
-                        class="form-control"
+                        class="form-control mb-3"
                         id="region-input"
                         value="Lombardia"
                         disabled
                       />
                     </div>
-                    <div class="col-6">
+                    <div class="col-12">
                       <label for="city-input" class="form-label">Comune</label>
                       <input
                         type="text"
-                        class="form-control"
+                        class="form-control mb-4"
                         id="city-input"
                         value="Milano"
                         disabled
                       />
                     </div>
                   </div>
-                </div>
-                <div class="col-6">
-                  <button type="submit" class="btn btn-primary">Calcola</button>
-                  <button type="reset" class="btn btn-primary">Cancella</button>
-                </div>
-              </form>
+                  <div class="row mt-3">
+                    <div class="col-6">
+                      <button id="button-submit" type="submit">Calcola</button>
+                    </div>
+                    <div class="col-6">
+                      <button id="button-reset" type="reset">Cancella</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
+
           <div class="col-12 col-lg-6">
-            <div id="data-results">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Voce</th>
-                    <th scope="col">Aliquota</th>
-                    <th scope="col">Importo</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">Reddito lordo (RAL)</th>
-                    <td></td>
-                    <td><span id="result-ral">0</span>&nbsp;&euro;</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">INPS</th>
-                    <td>9.19%</td>
-                    <td><span id="result-inps">0</span>&nbsp;&euro;</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Base Imponibile fiscale</th>
-                    <td></td>
-                    <td>
-                      <span id="result-baseImponibile">0</span>&nbsp;&euro;
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">IRPEF (&lt;&nbsp;28.000&nbsp;&euro;)</th>
-                    <td>
-                      <span class="irpef-rate">23%</span>
-                    </td>
-                    <td><span class="irpef-tax">0</span>&nbsp;&euro;</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      IRPEF (28.000&nbsp;&ndash;&nbsp;50.000&nbsp;&euro;)
-                    </th>
-                    <td><span class="irpef-rate">35%</span></td>
-                    <td><span class="irpef-tax">0</span>&nbsp;&euro;</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">IRPEF (&gt;&nbsp;50.000&nbsp;&euro;)</th>
-                    <td><span class="irpef-rate">43%</span></td>
-                    <td><span class="irpef-tax">0</span>&nbsp;&euro;</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">IRPEF lorda totale</th>
-                    <td></td>
-                    <td><span id="result-irpefTotale">0</span>&nbsp;&euro;</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Detrazione per lavoro dipendente</th>
-                    <td></td>
-                    <td><span id="result-detrazione">0</span>&nbsp;&euro;</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">IRPEF netta</th>
-                    <td></td>
-                    <td><span id="result-irpefNetta">0</span>&nbsp;&euro;</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Addizionale regionale (&lt;&nbsp;15.000&nbsp;&euro;)
-                    </th>
-                    <td><span class="regionale-rate">1.23%</span></td>
-                    <td><span class="regionale-tax">0</span>&nbsp;&euro;</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Addizionale regionale
-                      (15.000&nbsp;&ndash;&nbsp;28.000&nbsp;&euro;)
-                    </th>
-                    <td><span class="regionale-rate">1.58%</span></td>
-                    <td><span class="regionale-tax">0</span>&nbsp;&euro;</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Addizionale regionale
-                      (28.000&nbsp;&ndash;&nbsp;50.000&nbsp;&euro;)
-                    </th>
-                    <td><span class="regionale-rate">1.72%</span></td>
-                    <td><span class="regionale-tax">0</span>&nbsp;&euro;</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Addizionale regionale (&gt;&nbsp;50.000&nbsp;&euro;)
-                    </th>
-                    <td><span class="regionale-rate">1.73%</span></td>
-                    <td><span class="regionale-tax">0</span>&nbsp;&euro;</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Addizionale regionale totale</th>
-                    <td></td>
-                    <td><span id="result-regionale">0</span>&nbsp;&euro;</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Addizionale comunale</th>
-                    <td>0.08%</td>
-                    <td><span id="result-comunale">0</span>&nbsp;&euro;</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Totale prelievi</th>
-                    <td></td>
-                    <td>
-                      <span id="result-prelievoTotale">0</span>&nbsp;&euro;
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Netto annuale</th>
-                    <td></td>
-                    <td><span id="result-nettoAnnuale">0</span>&nbsp;&euro;</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Netto mensile</th>
-                    <td></td>
-                    <td><span id="result-nettoMensile">0</span>&nbsp;&euro;</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="table-section ps-4 pe-3 pt-3 pb-3">
+              <div id="data-results">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">Voce</th>
+                      <th scope="col">Aliquota</th>
+                      <th scope="col">Importo</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="row-grey">
+                      <th scope="row">Reddito lordo (RAL)</th>
+                      <td></td>
+                      <td><span id="result-ral">0</span>&nbsp;&euro;</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">INPS</th>
+                      <td>9.19%</td>
+                      <td><span id="result-inps">0</span>&nbsp;&euro;</td>
+                    </tr>
+                    <tr class="row-grey">
+                      <th scope="row">Base Imponibile fiscale</th>
+                      <td></td>
+                      <td>
+                        <span id="result-baseImponibile">0</span>&nbsp;&euro;
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">IRPEF (&lt;&nbsp;28.000&nbsp;&euro;)</th>
+                      <td>
+                        <span class="irpef-rate">23%</span>
+                      </td>
+                      <td><span class="irpef-tax">0</span>&nbsp;&euro;</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">
+                        IRPEF (28.000&nbsp;&ndash;&nbsp;50.000&nbsp;&euro;)
+                      </th>
+                      <td><span class="irpef-rate">35%</span></td>
+                      <td><span class="irpef-tax">0</span>&nbsp;&euro;</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">IRPEF (&gt;&nbsp;50.000&nbsp;&euro;)</th>
+                      <td><span class="irpef-rate">43%</span></td>
+                      <td><span class="irpef-tax">0</span>&nbsp;&euro;</td>
+                    </tr>
+                    <tr class="row-grey">
+                      <th scope="row">IRPEF lorda totale</th>
+                      <td></td>
+                      <td>
+                        <span id="result-irpefTotale">0</span>&nbsp;&euro;
+                      </td>
+                    </tr>
+                    <tr class="row-grey">
+                      <th scope="row">Detrazione per lavoro dipendente</th>
+                      <td></td>
+                      <td><span id="result-detrazione">0</span>&nbsp;&euro;</td>
+                    </tr>
+                    <tr class="row-grey">
+                      <th scope="row">IRPEF netta</th>
+                      <td></td>
+                      <td><span id="result-irpefNetta">0</span>&nbsp;&euro;</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">
+                        Addizionale regionale (&lt;&nbsp;15.000&nbsp;&euro;)
+                      </th>
+                      <td><span class="regionale-rate">1.23%</span></td>
+                      <td><span class="regionale-tax">0</span>&nbsp;&euro;</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">
+                        Addizionale regionale
+                        (15.000&nbsp;&ndash;&nbsp;28.000&nbsp;&euro;)
+                      </th>
+                      <td><span class="regionale-rate">1.58%</span></td>
+                      <td><span class="regionale-tax">0</span>&nbsp;&euro;</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">
+                        Addizionale regionale
+                        (28.000&nbsp;&ndash;&nbsp;50.000&nbsp;&euro;)
+                      </th>
+                      <td><span class="regionale-rate">1.72%</span></td>
+                      <td><span class="regionale-tax">0</span>&nbsp;&euro;</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">
+                        Addizionale regionale (&gt;&nbsp;50.000&nbsp;&euro;)
+                      </th>
+                      <td><span class="regionale-rate">1.73%</span></td>
+                      <td><span class="regionale-tax">0</span>&nbsp;&euro;</td>
+                    </tr>
+                    <tr class="row-grey">
+                      <th scope="row">Addizionale regionale totale</th>
+                      <td></td>
+                      <td><span id="result-regionale">0</span>&nbsp;&euro;</td>
+                    </tr>
+                    <tr class="row-grey">
+                      <th scope="row">Addizionale comunale</th>
+                      <td>0.08%</td>
+                      <td><span id="result-comunale">0</span>&nbsp;&euro;</td>
+                    </tr>
+                    <tr class="row-grey">
+                      <th scope="row">Totale prelievi</th>
+                      <td></td>
+                      <td>
+                        <span id="result-prelievoTotale">0</span>&nbsp;&euro;
+                      </td>
+                    </tr>
+                    <tr class="row-highlight">
+                      <th scope="row">Netto annuale</th>
+                      <td></td>
+                      <td>
+                        <span id="result-nettoAnnuale">0</span>&nbsp;&euro;
+                      </td>
+                    </tr>
+                    <tr class="row-highlight">
+                      <th scope="row">Netto mensile</th>
+                      <td></td>
+                      <td>
+                        <span id="result-nettoMensile">0</span>&nbsp;&euro;
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
       </section>
     </main>
 
-    <footer>
-      <p>Empowered by Sophie Eyraud</p>
+    <footer class="pt-3 pb-3">
+      <p class="text-body-secondary">Empowered by Sophie Eyraud</p>
     </footer>
 
     <script

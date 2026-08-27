@@ -1,0 +1,113 @@
+/* ---------------- Generic style ---------------- */
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+:root {
+  /* Font stacks */
+  --font-body: "IBM Plex Sans", serif;
+  --font-title: "Anton", sans-serif;
+  --font-transform: uppercase;
+
+  /* Colour palette */
+  --color-text: #272926;
+  --color-bg: #ececec;
+  --color-darker-grey: #c7c2c2;
+  --color-green: #5fe9b6;
+  --color-darker-green: #439379;
+}
+
+/* ---------------- General styles ---------------- */
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  background-color: var(--color-bg);
+  flex: 1; /* Takes all the space available between header and footer */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header {
+  background-color: var(--color-darker-grey);
+  text-align: center;
+  font-family: var(--font-title);
+  font-size: 1.5rem;
+}
+
+#title-color {
+  color: var(--color-darker-green);
+}
+
+footer {
+  background-color: var(--color-bg);
+  border-top: var(--color-darker-grey) 2px solid;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+footer a {
+  text-decoration: none;
+}
+
+button {
+  border-radius: 5px;
+  padding: 0.7rem;
+  cursor: pointer;
+  transition: color 0.2s;
+  font-size: 1rem;
+}
+
+/* ---------------- Specific styles Bloc Year ---------------- */
+.year-section {
+  background-color: var(--color-green);
+  border-radius: 5px;
+}
+
+.year-section h2 {
+  font-family: var(--font-title);
+}
+
+/* ---------------- Specific styles Form ---------------- */
+.form-section {
+  background-color: white;
+  border-radius: 5px;
+}
+
+#button-submit {
+  background-color: var(--color-green);
+  border: 2px solid var(--color-green);
+  color: var(--color-text);
+  width: 100%;
+}
+
+#button-reset {
+  background-color: white;
+  border: 2px solid var(--color-green);
+  color: var(--color-text);
+  width: 100%;
+}
+
+/* ---------------- Specific styles Table ---------------- */
+.table-section {
+  background-color: white;
+  border-radius: 5px;
+}
+
+.row-highlight td,
+.row-highlight th {
+  background-color: var(--color-green);
+}
+
+.row-grey td,
+.row-grey th {
+  background-color: var(--color-bg);
+}
